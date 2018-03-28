@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">android-entlive</string>
+    <string name="title_activity_sign_up">SignUpActivity</string>
 </resources>

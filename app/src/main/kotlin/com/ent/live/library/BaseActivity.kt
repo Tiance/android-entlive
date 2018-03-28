@@ -5,9 +5,10 @@ import android.view.View
 import kotlin.reflect.KClass
 
 @Open
-class BaseActivity<out T : IViewModel> : AppCompatActivity() {
-
-    protected val disposeBag = DisposeBag(this)
+class BaseActivity<out T : BaseViewModel> : AppCompatActivity() {
+    protected val disposeBag: DisposeBag by lazy {
+        DisposeBag(this)
+    }
 
     val viewModel: T
         get() {
@@ -66,8 +67,7 @@ class BaseActivity<out T : IViewModel> : AppCompatActivity() {
     }
 
     companion object {
-        val map = mutableMapOf<String, IViewModel>()
-
+        val map = mutableMapOf<String, BaseViewModel>()
     }
 
 }

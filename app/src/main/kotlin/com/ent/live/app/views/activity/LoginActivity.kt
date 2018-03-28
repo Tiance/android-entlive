@@ -2,11 +2,10 @@ package com.ent.live.app.views.activity
 
 import android.os.Bundle
 import android.util.Log
-import com.ent.live.live.R
 import com.ent.live.app.viewmodels.LoginViewModel
 import com.ent.live.library.*
+import com.ent.live.live.R
 import com.jakewharton.rxbinding2.widget.RxTextView
-import io.reactivex.Observable
 
 
 @ViewModelCreator(ViewModelScope.SINGLETON)
@@ -36,11 +35,6 @@ class LoginActivity : BaseActivity<LoginViewModel.ViewModel>() {
                     NotificationCenter.default.post(NotificationCenter.Notification("hello", 10))
                 }
                 .disposedBy(disposeBag)
-
-        val a = Observable.just(0)
-        val b = Observable.just("")
-        val c = Observable.just(0.33)
-
 
     }
 }

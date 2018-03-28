@@ -1,3 +1,3 @@
 package com.ent.live.library
 
-interface IViewModel
+interface BaseViewModel

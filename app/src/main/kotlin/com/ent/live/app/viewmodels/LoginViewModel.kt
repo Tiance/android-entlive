@@ -1,10 +1,10 @@
 package com.ent.live.app.viewmodels
 
-import com.ent.live.library.IViewModel
+import com.ent.live.library.BaseViewModel
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 
-interface LoginViewModel : IViewModel {
+interface LoginViewModel : BaseViewModel {
 
     interface Inputs {
         fun username(value: String)
