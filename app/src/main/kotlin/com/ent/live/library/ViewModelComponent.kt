@@ -1,18 +1,17 @@
 package com.ent.live.library
 
+import android.app.Fragment
+import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import kotlin.reflect.KClass
 
-@Open
-class BaseActivity<out T : BaseViewModel> : AppCompatActivity() {
-    protected val disposeBag: DisposeBag by lazy {
-        DisposeBag(this)
-    }
+
+interface ViewModelComponent<out T : ViewModelComponent.ViewModel> {
 
     val viewModel: T
         get() {
-            val cls = this@BaseActivity::class
+            val cls = this@ViewModelComponent::class
                     .supertypes.first()
             val args = cls.arguments.first()
             val annotationsList = cls.javaClass.annotations
@@ -44,30 +43,48 @@ class BaseActivity<out T : BaseViewModel> : AppCompatActivity() {
             }
         }
 
-
-    override fun setContentView(view: View?) {
-        super.setContentView(view)
-        bindViewModel()
-        bindStyle()
-
-    }
-
-    override fun setContentView(layoutResID: Int) {
-        super.setContentView(layoutResID)
-        bindViewModel()
-        bindStyle()
-    }
-
-    fun bindViewModel() {
-
-    }
-
-    fun bindStyle() {
-
-    }
-
     companion object {
-        val map = mutableMapOf<String, BaseViewModel>()
+        val map = mutableMapOf<String, ViewModel>()
     }
 
+    interface ViewModel {
+
+    }
+
+
+    @Open
+    class ViewModelActivity<out T : ViewModelComponent.ViewModel> : AppCompatActivity(), ViewModelComponent<T> {
+
+        protected val disposeBag: DisposeBag by lazy {
+            DisposeBag(this)
+        }
+
+        override fun setContentView(view: View?) {
+            super.setContentView(view)
+            bindViewModel()
+
+        }
+
+        override fun setContentView(layoutResID: Int) {
+            super.setContentView(layoutResID)
+            bindViewModel()
+        }
+
+        fun bindViewModel() {
+
+        }
+
+    }
+
+    @Open
+    class ViewModelFragment<out T : ViewModelComponent.ViewModel> : Fragment(), ViewModelComponent<T> {
+        override fun onActivityCreated(savedInstanceState: Bundle?) {
+            super.onActivityCreated(savedInstanceState)
+            bindViewModel()
+        }
+
+        fun bindViewModel() {
+
+        }
+    }
 }

@@ -9,7 +9,7 @@ import com.jakewharton.rxbinding2.widget.RxTextView
 
 
 @ViewModelCreator(ViewModelScope.SINGLETON)
-class LoginActivity : BaseActivity<LoginViewModel.ViewModel>() {
+class LoginActivity : ViewModelComponent.ViewModelActivity<LoginViewModel.ViewModel>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

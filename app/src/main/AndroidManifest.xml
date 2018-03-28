@@ -19,7 +19,7 @@
             </intent-filter>
         </activity>
         <activity android:name="com.ent.live.app.views.activity.LoginActivity"/>
-        <activity android:name="com.ent.live.library.BaseActivity"/>
+        <activity android:name="com.ent.live.library.ViewModelActivity"/>
     </application>
 
 </manifest>
