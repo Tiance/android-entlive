@@ -9,26 +9,43 @@ open class BaseActivity<out T : IViewModel> : AppCompatActivity() {
 
     protected val disposeBag = DisposeBag(this)
 
-    val viewModel: T by lazy {
-        val key = this@BaseActivity::class
-                .supertypes.first()
-                .arguments.first()
-                .type.toString()
+    val viewModel: T
+        get() {
+            val cls = this@BaseActivity::class
+                    .supertypes.first()
+            val args = cls.arguments.first()
+            val annotationsList = cls.javaClass.annotations
 
-        val rlt = map[key]
-        @Suppress("UNCHECKED_CAST")
-        if (rlt != null) return@lazy rlt as T
+            var scope = ViewModelScope.SINGLETON
+            for (item in annotationsList) {
+                if (item is ViewModelCreator) {
+                    scope = item.type
+                    break
+                }
+            }
+            (args.type!!.classifier as KClass<*>).constructors.take(1)
+                    .first()
+                    .call()
 
-        @Suppress("UNCHECKED_CAST")
-        val value = (this@BaseActivity::class
-                .supertypes.first()
-                .arguments.first()
-                .type!!.classifier as KClass<*>)
-                .constructors.take(1)
-                .first().call() as T
-        map[key] = value
-        return@lazy value
-    }
+            @Suppress("UNCHECKED_CAST")
+            when (scope) {
+                ViewModelScope.PROTOTYPE -> {
+                    return (args.type!!.classifier as KClass<*>).constructors.take(1)
+                            .first()
+                            .call() as T
+                }
+                else -> {
+                    val key = args.type.toString()
+                    var rlt = map[key]
+                    if (rlt == null) rlt = (args.type!!.classifier as KClass<*>).constructors.take(1)
+                            .first()
+                            .call() as T
+                    map[key] = rlt
+                    return rlt as T
+                }
+            }
+        }
+
 
     override fun setContentView(view: View?) {
         super.setContentView(view)

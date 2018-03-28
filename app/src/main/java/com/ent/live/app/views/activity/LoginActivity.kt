@@ -4,12 +4,11 @@ import android.os.Bundle
 import android.util.Log
 import com.ent.live.R
 import com.ent.live.app.viewmodels.LoginViewModel
-import com.ent.live.library.BaseActivity
-import com.ent.live.library.Notification
-import com.ent.live.library.NotificationCenter
-import com.ent.live.library.disposedBy
+import com.ent.live.library.*
 import com.jakewharton.rxbinding2.widget.RxTextView
 
+
+@ViewModelCreator(ViewModelScope.PROTOTYPE)
 class LoginActivity : BaseActivity<LoginViewModel>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,7 +31,7 @@ class LoginActivity : BaseActivity<LoginViewModel>() {
         viewModel.outputs.loginResult
                 .subscribe {
                     Log.d("LoginViewModel", it.toString())
-                    NotificationCenter.default.post(Notification("hello", 10))
+                    NotificationCenter.default.post(NotificationCenter.Notification("hello", 10))
                 }
                 .disposedBy(disposeBag)
     }

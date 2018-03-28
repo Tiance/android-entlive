@@ -3,9 +3,6 @@ package com.ent.live.library
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 
-data class Notification<T>(
-        val name: String,
-        val data: T)
 
 class NotificationCenter {
     private val subject = PublishSubject.create<Notification<*>>()
@@ -24,4 +21,9 @@ class NotificationCenter {
             NotificationCenter()
         }
     }
+
+
+    data class Notification<T>(
+            val name: String,
+            val data: T)
 }
