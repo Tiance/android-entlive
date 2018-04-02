@@ -26,4 +26,5 @@ class NotificationCenter {
     data class Notification<T>(
             val name: String,
             val data: T)
+
 }

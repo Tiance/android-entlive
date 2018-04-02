@@ -1,4 +1,9 @@
 <resources>
-    <string name="app_name">android-entlive</string>
+    <string name="app_name">半边鱼</string>
     <string name="title_activity_sign_up">SignUpActivity</string>
+    <string name="title_activity_main_tab">半边鱼</string>
+    <string name="main_tab_recommend">推荐</string>
+    <string name="main_tab_square">广场</string>
+    <string name="main_tab_message">消息</string>
+    <string name="main_tab_me">我</string>
 </resources>

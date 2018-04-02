@@ -1,6 +1,7 @@
 package com.ent.live.library
 
 import android.app.Fragment
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
@@ -11,15 +12,14 @@ interface ViewModelComponent<out T : ViewModelComponent.ViewModel> {
 
     val viewModel: T
         get() {
-            val cls = this@ViewModelComponent::class
-                    .supertypes.first()
+            val cls = this@ViewModelComponent::class.supertypes.first()
             val args = cls.arguments.first()
             val annotationsList = cls.javaClass.annotations
 
             var scope = ViewModelScope.SINGLETON
 
             for (item in annotationsList) {
-                if (item is ViewModelCreator) {
+                if (item is Produce) {
                     scope = item.type
                     break
                 }
@@ -47,9 +47,7 @@ interface ViewModelComponent<out T : ViewModelComponent.ViewModel> {
         val map = mutableMapOf<String, ViewModel>()
     }
 
-    interface ViewModel {
-
-    }
+    interface ViewModel
 
 
     @Open
@@ -72,6 +70,10 @@ interface ViewModelComponent<out T : ViewModelComponent.ViewModel> {
 
         fun bindViewModel() {
 
+        }
+
+        override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+            super.onActivityResult(requestCode, resultCode, data)
         }
 
     }

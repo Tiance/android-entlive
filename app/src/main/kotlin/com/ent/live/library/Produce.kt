@@ -5,4 +5,4 @@ enum class ViewModelScope {
     PROTOTYPE
 }
 
-annotation class ViewModelCreator(val type: ViewModelScope = ViewModelScope.SINGLETON)
+annotation class Produce(val type: ViewModelScope = ViewModelScope.SINGLETON)
