@@ -1,6 +1,9 @@
 package com.ent.live.app.viewmodels.fragment
 
+import com.ent.live.app.library.AppEnvironment
+import com.ent.live.app.model.User
 import com.ent.live.library.ViewModelComponent
+import com.ent.live.library.ext.ui
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 
@@ -12,7 +15,7 @@ interface MessageViewModel : ViewModelComponent.ViewModel {
     }
 
     interface Outputs {
-        val loginResult: Observable<Boolean>
+        val users: Observable<List<User>>
     }
 
 
@@ -38,8 +41,8 @@ interface MessageViewModel : ViewModelComponent.ViewModel {
 
 
         /*outputs*/
-        override val loginResult: Observable<Boolean>
-            get() = usernameSubject.map { it.length == 3 }
+        override val users: Observable<List<User>>
+            get() = AppEnvironment.current.api.users().ui()
 
 
     }

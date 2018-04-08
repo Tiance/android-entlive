@@ -1,8 +1,9 @@
 package com.ent.live.library
 
-import android.app.Fragment
+
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import kotlin.reflect.KClass
@@ -80,6 +81,12 @@ interface ViewModelComponent<out T : ViewModelComponent.ViewModel> {
 
     @Open
     class ViewModelFragment<out T : ViewModelComponent.ViewModel> : Fragment(), ViewModelComponent<T> {
+
+
+        protected val disposeBag: DisposeBag by lazy {
+            DisposeBag(this)
+        }
+
         override fun onActivityCreated(savedInstanceState: Bundle?) {
             super.onActivityCreated(savedInstanceState)
             bindViewModel()

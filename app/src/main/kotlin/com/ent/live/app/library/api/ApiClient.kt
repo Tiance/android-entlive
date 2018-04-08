@@ -8,4 +8,7 @@ import retrofit2.http.Path
 interface ApiClient {
     @GET("/user/{id}")
     fun user(@Path("id") id: Int): Observable<User>
+
+    @GET("/users")
+    fun users(): Observable<List<User>>
 }

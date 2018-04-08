@@ -25,6 +25,9 @@ android {
         sourceSets {
             main.java.srcDirs += 'src/main/kotlin'
         }
+        lintOptions {
+            disable 'RestrictedApi'
+        }
     }
 
 
@@ -34,6 +37,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:27.1.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.support:design:27.1.0'
+    compile 'com.android.support:support-v4:27.1.0'
     testCompile 'junit:junit:4.12'
     androidTestCompile('com.android.support.test.espresso:espresso-core:3.0.1', {
         exclude group: 'com.android.support', module: 'support-annotations'
@@ -56,6 +60,12 @@ dependencies {
     compile 'com.jakewharton.rxbinding2:rxbinding:2.1.1'
     compile 'com.jakewharton.rxbinding2:rxbinding-appcompat-v7:2.1.1'
     compile 'com.jakewharton.rxbinding2:rxbinding-design:2.1.1'
+    compile 'com.jakewharton.rxbinding2:rxbinding-recyclerview-v7:2.1.1'
+
+
+
+
+    compile 'com.squareup.picasso:picasso:2.71828'
 
 }
 

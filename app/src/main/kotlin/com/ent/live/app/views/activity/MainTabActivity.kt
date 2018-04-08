@@ -1,40 +1,29 @@
 package com.ent.live.live
 
 import android.os.Bundle
-import android.support.design.widget.BottomNavigationView
-import android.support.v7.app.AppCompatActivity
-import android.widget.FrameLayout
-import kotlinx.android.synthetic.main.activity_main_tab.*
+import com.ent.live.app.viewmodels.activity.MainTabViewModel
+import com.ent.live.library.Produce
+import com.ent.live.library.ViewModelComponent
+import com.ent.live.library.ViewModelScope
+import com.ent.live.library.ext.replaceFragment
+import com.jakewharton.rxbinding2.support.design.widget.RxBottomNavigationView
 
-class MainTabActivity : AppCompatActivity() {
 
-    private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-        when (item.itemId) {
-            R.id.main_tab_recommend -> {
-                message.setText(R.string.main_tab_recommend)
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.main_tab_square -> {
-                message.setText(R.string.main_tab_square)
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.main_tab_message -> {
-                message.setText(R.string.main_tab_message)
-                return@OnNavigationItemSelectedListener true
-            }
-            else -> {
-                message.setText(R.string.main_tab_me)
-            }
-        }
-        false
-    }
+@Produce(ViewModelScope.PROTOTYPE)
+class MainTabActivity : ViewModelComponent.ViewModelActivity<MainTabViewModel.ViewModel>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_tab)
-        val container: FrameLayout = findViewById(R.id.container)
-        
+    }
 
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+    override fun bindViewModel() {
+        RxBottomNavigationView.itemSelections(findViewById(R.id.navigation))
+                .subscribe { viewModel.tabSelected(it.itemId) }
+
+        viewModel.outputs.tabSelected
+                .subscribe {
+                    replaceFragment(R.id.container, it)
+                }
     }
 }
